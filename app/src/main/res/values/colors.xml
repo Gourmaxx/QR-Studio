@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Couleurs utilisées uniquement par le thème système (splash, fenêtre).
+         La palette Compose vit dans ui/theme/Color.kt. -->
+    <color name="splash_background">#0E1016</color>
+    <color name="launcher_background">#0E1016</color>
+
+    <!-- Widget (layout RemoteViews, hors Compose) -->
+    <color name="widget_background">#FFFFFF</color>
+    <color name="widget_label">#15161C</color>
+</resources>

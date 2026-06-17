@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Thème de base : appliqué une fois le contenu Compose chargé. -->
+    <style name="Theme.QRStudio" parent="android:Theme.Material.NoActionBar">
+        <item name="android:statusBarColor">@color/splash_background</item>
+        <item name="android:navigationBarColor">@color/splash_background</item>
+        <item name="android:windowLightStatusBar">false</item>
+    </style>
+
+    <!-- Écran de démarrage (AndroidX SplashScreen). -->
+    <style name="Theme.QRStudio.Starting" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/splash_background</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_splash</item>
+        <item name="postSplashScreenTheme">@style/Theme.QRStudio</item>
+    </style>
+
+</resources>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">QR Studio</string>
+
+    <!-- Home-screen widget -->
+    <string name="widget_description">Affiche le QR code épinglé dans l\'historique.</string>
+    <string name="widget_empty">Épinglez un QR dans l\'historique pour l\'afficher ici.</string>
+    <string name="widget_qr_content_description">QR code épinglé</string>
+
+    <!-- Launcher shortcuts -->
+    <string name="shortcut_scan_short">Scanner</string>
+    <string name="shortcut_scan_long">Scanner un code</string>
+</resources>

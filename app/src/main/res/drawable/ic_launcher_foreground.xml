@@ -1,0 +1,20 @@
+<!-- Même repère que ic_app_mark, recadré dans la "safe zone" de l'icône adaptive. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <path
+        android:strokeColor="#7C5CFF"
+        android:strokeWidth="9"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:pathData="M30,48 L30,30 L48,30 M60,30 L78,30 L78,48
+                          M78,60 L78,78 L60,78 M48,78 L30,78 L30,60" />
+    <path
+        android:strokeColor="#22D3EE"
+        android:strokeWidth="18"
+        android:strokeLineCap="round"
+        android:pathData="M53.5,54 L54.5,54" />
+</vector>

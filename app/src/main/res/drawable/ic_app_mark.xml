@@ -1,0 +1,23 @@
+<!-- Repère "viseur de scan" : crochets d'angle + point central.
+     Volontairement différent d'un motif QR (pas de carré plein imbriqué)
+     pour ne pas perturber le décodage quand il est placé au centre d'un QR.
+     Version cadrée large, utilisée comme logo au centre des QR générés. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <path
+        android:strokeColor="#7C5CFF"
+        android:strokeWidth="13"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:pathData="M14,40 L14,14 L40,14 M68,14 L94,14 L94,40
+                          M94,68 L94,94 L68,94 M40,94 L14,94 L14,68" />
+    <path
+        android:strokeColor="#22D3EE"
+        android:strokeWidth="26"
+        android:strokeLineCap="round"
+        android:pathData="M53.5,54 L54.5,54" />
+</vector>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- history.json holds Wi-Fi passwords and contacts in clear text; keep it off
+     automatic backups (adb backup / cloud). The in-app JSON export/import is the
+     intended way to move history between devices. -->
+<full-backup-content>
+    <exclude
+        domain="file"
+        path="history.json" />
+</full-backup-content>

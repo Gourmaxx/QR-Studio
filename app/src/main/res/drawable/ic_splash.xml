@@ -1,0 +1,20 @@
+<!-- Repère "viseur de scan" pour l'écran de démarrage. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="120dp"
+    android:height="120dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <path
+        android:strokeColor="#7C5CFF"
+        android:strokeWidth="10"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:pathData="M24,46 L24,24 L46,24 M62,24 L84,24 L84,46
+                          M84,62 L84,84 L62,84 M46,84 L24,84 L24,62" />
+    <path
+        android:strokeColor="#22D3EE"
+        android:strokeWidth="20"
+        android:strokeLineCap="round"
+        android:pathData="M53.5,54 L54.5,54" />
+</vector>

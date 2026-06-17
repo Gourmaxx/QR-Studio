@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths>
+    <!-- QR codes exportés temporairement pour le partage. -->
+    <cache-path
+        name="shared_qr"
+        path="shared/" />
+    <external-cache-path
+        name="external_shared_qr"
+        path="shared/" />
+</paths>

@@ -1,7 +1,7 @@
 # SUIVI — QR Studio
 
 ## 🧭 Ligne directrice
-> **MàJ : 2026-06-07** — App Android « QR Studio » : tout transformer en QR code + lecteur caméra + historique. **État : v1 + lot d'améliorations « perso/amis » + passe d'audit (sécurité/simplification) terminés. Audit 2026-06-07 : 3 correctifs sécurité (bombe Deflate bornée, mots de passe WiFi exclus du backup + presse-papiers sensible) et refactor maintenabilité (state-holder unique du formulaire Créer, QrEncoder.styleFor, dédup downsample/permission). Revue de compilation passée (1 erreur trouvée et corrigée).** Prochaine priorité : **compiler sur le PC Windows** (`gradlew.bat assembleDebug` + `testDebugUnitTest`) puis tester sur appareil.
+> **MàJ : 2026-06-17** — App Android « QR Studio » : tout transformer en QR code + lecteur caméra + historique. **État : v1.0 signée et PUBLIÉE en GitHub Release — APK téléchargeable directement : https://github.com/Gourmaxx/QR-Studio/releases/latest/download/QR-Studio.apk . Fait notable : la VM macOS COMPILE (JDK = JBR d'Android Studio, voir gotchas) — l'hypothèse « Java/Gradle absents sur macOS » était fausse.** Prochaine priorité : **tester l'APK signé sur appareil réel** (installer depuis le lien release), puis bumper `versionCode`/`versionName` pour les mises à jour suivantes.
 
 ## ✅ Fait
 - [x] Cadrage technique (versions alignées sur AlcoLimit : AGP 9.1.1, Kotlin 2.1.20, Gradle 9.3.1, Compose BOM 2025.01.00, compileSdk 36, minSdk 26, Java 17)
@@ -35,15 +35,24 @@
   - [x] **C1/C6** — `GenerateFormState` (state-holder unique + `Saver`) remplace les 18 `rememberSaveable` + le miroir x4 ; `buildPayload`/`buildLabel` prennent le form ; composables de formulaire extraits dans `GenerateForm.kt`.
   - [x] **C2/C3/C4/C5/C7** — champ mort `FileOutcome.Ready.label` retiré ; `QrEncoder.styleFor` (règle FILE→L unique, 3 sites) ; `sampleSizeFor` partagé (scan/embedding) ; `rememberLegacyStorageSave` (permission stockage mutualisée) ; `openUri`/`joinWifi` en `private`.
   - [x] Revue de compilation (android-reviewer) : 1 erreur `RETURN_IN_FUNCTION_WITH_EXPRESSION_BODY` (FileContainer) corrigée, reste validé.
+- [x] **Distribution 2026-06-17** : signature release configurée + premier APK publié.
+  - [x] Keystore release `qr-studio-release.jks` (RSA 2048, validité 10000 j, alias `qrstudio`) + `keystore.properties` (gitignorés tous les deux).
+  - [x] `signingConfigs("release")` lu depuis `keystore.properties` dans `app/build.gradle.kts`, branché sur le buildType release (signe seulement si le keystore est présent, sinon reste non signé → projet buildable sans la clé).
+  - [x] `.gitignore` : exclusion `keystore.properties`, `*.jks`, `*.keystore`.
+  - [x] Build `:app:assembleRelease` OK sur la VM macOS (JBR Android Studio) → APK signé V2 (2,44 Mo) vérifié `apksigner`.
+  - [x] GitHub Release `v1.0` publiée (repo public `Gourmaxx/QR-Studio`) avec l'asset `QR-Studio.apk` (nom sans version → lien `latest` permanent).
 
 ## ⏳ Reste à faire
-- [ ] **Compiler sur PC Windows** (Java/Gradle absents sur la VM macOS) : `gradlew.bat assembleDebug` puis `gradlew.bat testDebugUnitTest`
+- [ ] **Tester l'APK signé v1.0 sur appareil réel** : installer depuis https://github.com/Gourmaxx/QR-Studio/releases/latest/download/QR-Studio.apk
+- [ ] Lancer les tests unitaires (`./gradlew testReleaseUnitTest` ou `testDebugUnitTest`) — faisable sur la VM macOS via JBR
 - [ ] Tester sur appareil réel : scan caméra (zoom/focus/vibration), connexion WiFi (Android 11+), enregistrement galerie (Android ≤9 = demande de permission), widget (épingler une entrée puis poser le widget), shortcut Scanner, export/import d'historique entre deux appareils
 - [ ] Vérifier que l'écran Créer tient toujours sans scroll sur petit écran (la rangée « Couleur du QR » ajoute ~36 dp) — sinon réduire les pastilles ou les fusionner avec la ligne logo
 - [ ] (Optionnel) Icône PNG 512×512 pour la fiche Play Store
 
 ## 📋 Notes / gotchas
-- **Java/Gradle absents sur la VM macOS** → compilation finale sur PC Windows (Android Studio). Tests unitaires JVM purs lançables là-bas.
+- **La VM macOS COMPILE en réalité** (hypothèse précédente fausse) : pas de Java dans le PATH, mais le JDK est livré avec Android Studio → `export JAVA_HOME="/Applications/Android Studio.app/Contents/jbr/Contents/Home"` puis `./gradlew ...` fonctionne. SDK : `/Users/admin/Library/Android/sdk` (dans `local.properties`, gitignoré).
+- **Distribution / màj APK** : 1) bumper `versionCode`/`versionName` dans `app/build.gradle.kts` ; 2) `export JAVA_HOME=".../Android Studio.app/Contents/jbr/Contents/Home" && ./gradlew :app:assembleRelease` ; 3) `cp app/build/outputs/apk/release/app-release.apk /tmp/QR-Studio.apk && gh release create vX.Y /tmp/QR-Studio.apk --repo Gourmaxx/QR-Studio --title "..." --notes "..."`. Asset toujours nommé `QR-Studio.apk` → le lien `releases/latest/download/QR-Studio.apk` sert toujours la dernière version.
+- **Keystore = critique** : `qr-studio-release.jks` + son mot de passe (dans `keystore.properties`) sont gitignorés donc **hors GitHub**. À sauvegarder hors machine (gestionnaire de mots de passe) ET à copier manuellement sur le PC Windows pour pouvoir y builder/signer. Perte = impossible de mettre à jour l'app (Play Store).
 - **Capacité QR limitée** (~2,9 Ko max, ~2 Ko après base64) → fichiers/images : seuls les petits passent ; avertissement explicite au-delà. Comportement honnête, pas de magie.
 - **WiFi auto-connect restreint** depuis Android 10 → on parse, on copie le mot de passe et on ouvre les réglages WiFi plutôt que de promettre une connexion auto.
 - **Pas de DI, pas de Room/DataStore/Retrofit** (conventions APP). Persistance = fichier JSON maison.
